@@ -8,11 +8,11 @@ class Handler_file(object):
         self.files = files
 
     def Read_File(self):
-        with open(self.files, 'r') as file:
-            res = file.readlines()
+        with open(self.files, 'r') as f:
+            res = f.readlines()
             return res
 
     def Write_File(self,data):
-        with open(self.files,'w') as file:
-            res = file.write(data)
+        with open(self.files,'w') as f:
+            res = f.write(data)
             return res

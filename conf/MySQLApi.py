@@ -54,4 +54,5 @@ class DB_API(object):
 
 
     def __del__(self):
-        self.conn.close()
+        if self.host is not None:
+            self.conn.close()
