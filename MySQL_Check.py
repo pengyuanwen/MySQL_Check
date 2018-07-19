@@ -19,7 +19,7 @@ class MySQL_Check():
         sql = "show slave status;"
         for ip_list in self.all_host:
             ip = ip_list.strip()
-            print ip
+            #print ip
             self.mysql_op = DB_API(ip)
             res = self.mysql_op.query_db(sql)
             for re in res:
@@ -32,8 +32,14 @@ class MySQL_Check():
                 Slave_IO_Running = re[10]
                 Slave_SQL_Running = re[11]
                 Seconds_Behind_Master = re[32]
-                print "master_host:%s,Master_Log_File:%s,Read_Master_Log_Pos:%s,Relay_Master_Log_File:%s,Exec_Master_Log_Pos:%s,Slave_IO_Running:%s,Slave_SQL_Running:%s" \
-                % (master_host,Master_Log_File,Read_Master_Log_Pos,Relay_Master_Log_File,Exec_Master_Log_Pos,Slave_IO_Running,Slave_SQL_Running)
+                #print "master_host:%s,Master_Log_File:%s,Read_Master_Log_Pos:%s,Relay_Master_Log_File:%s,Exec_Master_Log_Pos:%s,Slave_IO_Running:%s,Slave_SQL_Running:%s" \
+                #% (master_host,Master_Log_File,Read_Master_Log_Pos,Relay_Master_Log_File,Exec_Master_Log_Pos,Slave_IO_Running,Slave_SQL_Running)
+
+
+                if Master_Log_File == Relay_Master_Log_File and  Read_Master_Log_Pos == Exec_Master_Log_Pos:
+                    print "复制状态正常，主库IP:%s,从库IP:%s,延迟时间：%s" % (master_host,ip,Seconds_Behind_Master)
+                else:
+                    print "复制状态错误，请检查！！！"
 
 
 
